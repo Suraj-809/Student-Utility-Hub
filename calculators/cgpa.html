@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CGPA Calculator - Free Online CGPA Calculator</title>
+
+<meta name="description" content="Calculate your CGPA easily using subject credits and grade points with Student Utility Hub's free online CGPA calculator.">
+
+<meta name="robots" content="index, follow">
+
+<link rel="stylesheet" href="../css/style.css">
+
+</head>
+
+<body>
+
+<header>
+    <div class="container navbar">
+
+        <div class="logo">Student Utility Hub</div>
+
+        <button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+        <nav id="navMenu">
+            <a href="../index.html">Home</a>
+            <a href="index.html">Calculators</a>
+            <a href="../study-tools/index.html">Study Tools</a>
+            <a href="../career-tools/index.html">Career</a>
+            <a href="../tools/index.html">Tools</a>
+        </nav>
+
+    </div>
+</header>
+
+
+<main class="container">
+
+    <section class="calculator-page">
+
+        <h1>CGPA Calculator</h1>
+
+        <p>
+            Calculate your CGPA using subject credits and grade points.
+        </p>
+
+
+        <div class="calculator-box">
+
+            <div id="subjects">
+
+                <div class="subject-row">
+
+                    <input
+                        type="text"
+                        placeholder="Subject Name"
+                        class="subject-name"
+                    >
+
+                    <input
+                        type="number"
+                        placeholder="Credits"
+                        class="credits"
+                        min="0"
+                        step="0.5"
+                    >
+
+                    <input
+                        type="number"
+                        placeholder="Grade Point"
+                        class="grade-point"
+                        min="0"
+                        max="10"
+                        step="0.1"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <button onclick="addSubject()">
+                + Add Subject
+            </button>
+
+            <button onclick="calculateCGPA()">
+                Calculate CGPA
+            </button>
+
+            <button class="reset-btn" onclick="resetCGPA()">
+                Reset
+            </button>
+
+
+            <div id="cgpa-result" class="result"></div>
+
+        </div>
+
+
+        <section class="info-section">
+
+            <h2>How is CGPA calculated?</h2>
+
+            <p>
+                CGPA is calculated using the credits and grade points
+                of each subject.
+            </p>
+
+            <div class="formula">
+                CGPA = Σ(Credit × Grade Point) ÷ Σ(Credits)
+            </div>
+
+
+            <h3>Example</h3>
+
+            <p>
+                Suppose you have two subjects:
+            </p>
+
+            <p>
+                Subject 1: 4 credits, Grade Point 8
+            </p>
+
+            <p>
+                Subject 2: 3 credits, Grade Point 9
+            </p>
+
+            <div class="formula">
+                CGPA = (4 × 8 + 3 × 9) ÷ (4 + 3)
+            </div>
+
+        </section>
+
+    </section>
+
+</main>
+
+
+<footer>
+    <div class="container">
+        <p>© 2026 Student Utility Hub. All rights reserved.</p>
+    </div>
+</footer>
+
+
+<script src="../js/script.js"></script>
+
+
+<script>
+
+function addSubject() {
+
+    const subjects = document.getElementById("subjects");
+
+    const row = document.createElement("div");
+
+    row.className = "subject-row";
+
+    row.innerHTML = `
+        <input
+            type="text"
+            placeholder="Subject Name"
+            class="subject-name"
+        >
+
+        <input
+            type="number"
+            placeholder="Credits"
+            class="credits"
+            min="0"
+            step="0.5"
+        >
+
+        <input
+            type="number"
+            placeholder="Grade Point"
+            class="grade-point"
+            min="0"
+            max="10"
+            step="0.1"
+        >
+    `;
+
+    subjects.appendChild(row);
+}
+
+
+function calculateCGPA() {
+
+    const credits =
+        document.querySelectorAll(".credits");
+
+    const gradePoints =
+        document.querySelectorAll(".grade-point");
+
+    let totalCredits = 0;
+    let totalPoints = 0;
+
+
+    for (let i = 0; i < credits.length; i++) {
+
+        const credit =
+            parseFloat(credits[i].value);
+
+        const gradePoint =
+            parseFloat(gradePoints[i].value);
+
+
+        if (isNaN(credit) || isNaN(gradePoint)) {
+
+            document.getElementById("cgpa-result").innerHTML =
+                "Please enter credits and grade points for all subjects.";
+
+            return;
+        }
+
+
+        totalCredits += credit;
+
+        totalPoints += credit * gradePoint;
+    }
+
+
+    if (totalCredits === 0) {
+
+        document.getElementById("cgpa-result").innerHTML =
+            "Please enter valid credits.";
+
+        return;
+    }
+
+
+    const cgpa =
+        totalPoints / totalCredits;
+
+
+    document.getElementById("cgpa-result").innerHTML =
+        `Your CGPA is <strong>${cgpa.toFixed(2)}</strong>`;
+}
+
+
+function resetCGPA() {
+
+    document.getElementById("subjects").innerHTML = `
+
+        <div class="subject-row">
+
+            <input
+                type="text"
+                placeholder="Subject Name"
+                class="subject-name"
+            >
+
+            <input
+                type="number"
+                placeholder="Credits"
+                class="credits"
+                min="0"
+                step="0.5"
+            >
+
+            <input
+                type="number"
+                placeholder="Grade Point"
+                class="grade-point"
+                min="0"
+                max="10"
+                step="0.1"
+            >
+
+        </div>
+    `;
+
+    document.getElementById("cgpa-result").innerHTML = "";
+}
+
+</script>
+
+</body>
+</html>

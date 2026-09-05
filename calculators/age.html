@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Age Calculator - Calculate Your Exact Age</title>
+
+    <meta name="description" content="Calculate your exact age in years, months and days with this free online age calculator. Simply enter your date of birth to get your age.">
+    <meta name="robots" content="index, follow">
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+<header>
+    <div class="container navbar">
+
+        <div class="logo">Student Utility Hub</div>
+
+        <button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+        <nav id="navMenu">
+            <a href="../index.html">Home</a>
+            <a href="index.html">Calculators</a>
+            <a href="../study-tools/index.html">Study Tools</a>
+            <a href="../career-tools/index.html">Career</a>
+            <a href="../tools/index.html">Tools</a>
+        </nav>
+
+    </div>
+</header>
+
+
+<main class="container">
+
+    <section class="calculator-page">
+
+        <h1>Age Calculator</h1>
+
+        <p>
+            Calculate your exact age in years, months and days.
+        </p>
+
+
+        <div class="calculator-box">
+
+            <label for="dob">
+                Enter your Date of Birth
+            </label>
+
+            <input
+                type="date"
+                id="dob"
+            >
+
+
+            <button onclick="calculateAge()">
+                Calculate Age
+            </button>
+
+            <button class="reset-btn" onclick="resetAge()">
+                Reset
+            </button>
+
+
+            <div id="age-result" class="result"></div>
+
+        </div>
+
+
+        <section class="info-section">
+
+            <h2>How does the Age Calculator work?</h2>
+
+            <p>
+                Enter your date of birth and the calculator compares
+                it with today's date to determine your exact age.
+            </p>
+
+
+            <h3>Example</h3>
+
+            <p>
+                If your date of birth is 1 January 2005, the calculator
+                will calculate your current age automatically.
+            </p>
+
+        </section>
+
+    </section>
+
+</main>
+
+
+<footer>
+    <div class="container">
+        <p>© 2026 Student Utility Hub. All rights reserved.</p>
+    </div>
+</footer>
+
+
+<script src="../js/script.js"></script>
+
+
+<script>
+
+function calculateAge() {
+
+    const dobInput =
+        document.getElementById("dob").value;
+
+    const resultBox =
+        document.getElementById("age-result");
+
+
+    if (!dobInput) {
+
+        resultBox.innerHTML =
+            "Please enter your date of birth.";
+
+        return;
+    }
+
+
+    const birthDate =
+        new Date(dobInput + "T00:00:00");
+
+    const today =
+        new Date();
+
+
+    if (birthDate > today) {
+
+        resultBox.innerHTML =
+            "Date of birth cannot be in the future.";
+
+        return;
+    }
+
+
+    let years =
+        today.getFullYear() - birthDate.getFullYear();
+
+    let months =
+        today.getMonth() - birthDate.getMonth();
+
+    let days =
+        today.getDate() - birthDate.getDate();
+
+
+    if (days < 0) {
+
+        months--;
+
+        const previousMonth =
+            new Date(
+                today.getFullYear(),
+                today.getMonth(),
+                0
+            );
+
+        days += previousMonth.getDate();
+    }
+
+
+    if (months < 0) {
+
+        years--;
+
+        months += 12;
+    }
+
+
+    resultBox.innerHTML = `
+        Your age is
+        <strong>
+            ${years} years, ${months} months, ${days} days
+        </strong>
+    `;
+}
+
+
+function resetAge() {
+
+    document.getElementById("dob").value = "";
+
+    document.getElementById("age-result").innerHTML = "";
+}
+
+</script>
+
+</body>
+</html>

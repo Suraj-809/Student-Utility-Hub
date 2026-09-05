@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Student Utility Hub - Free Student Calculators & Study Tools</title>
+
+<meta name="description" content="Student Utility Hub provides free online calculators, study tools, career tools and useful utilities for students. Calculate CGPA, attendance, percentage, EMI and more.">
+
+<meta name="keywords" content="student tools, CGPA calculator, percentage calculator, attendance calculator, study tools, resume builder, EMI calculator">
+
+<meta name="robots" content="index, follow">
+
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+
+<header>
+    <div class="container navbar">
+
+        <div class="logo">
+            Student Utility Hub
+        </div>
+
+        <button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+        <nav id="navMenu">
+            <a href="index.html">Home</a>
+            <a href="calculators/index.html">Calculators</a>
+            <a href="study-tools/index.html">Study Tools</a>
+            <a href="career-tools/index.html">Career</a>
+            <a href="tools/index.html">Tools</a>
+        </nav>
+
+    </div>
+</header>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero">
+
+    <div class="container">
+
+        <h1>Free Online Tools for Students</h1>
+
+        <p>
+            Calculate, study, plan and get things done faster
+            with simple and useful student tools.
+        </p>
+
+        <!-- SEARCH -->
+
+        <div class="search-box">
+
+            <input
+                type="search"
+                id="toolSearch"
+                placeholder="Search for a tool..."
+                autocomplete="off"
+            >
+
+        </div>
+
+        <!-- SEARCH RESULTS -->
+
+        <div id="searchResults" class="tool-grid search-results"></div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= EXPLORE TOOLS ================= -->
+
+<section>
+
+    <div class="container">
+
+        <h2>Explore Tools</h2>
+
+        <div class="category-grid">
+
+            <!-- CALCULATORS -->
+
+            <a href="calculators/index.html" class="category-card">
+
+                <h3>🧮 Calculators</h3>
+
+                <p>
+                    Percentage, CGPA, attendance, age, EMI,
+                    interest and more.
+                </p>
+
+            </a>
+
+
+            <!-- STUDY TOOLS -->
+
+            <a href="study-tools/index.html" class="category-card">
+
+                <h3>📚 Study Tools</h3>
+
+                <p>
+                    Pomodoro timer, exam countdown,
+                    timetable generator and more.
+                </p>
+
+            </a>
+
+
+            <!-- CAREER -->
+
+            <a href="career-tools/index.html" class="category-card">
+
+                <h3>💼 Career Tools</h3>
+
+                <p>
+                    Create professional resumes and
+                    prepare for your career.
+                </p>
+
+            </a>
+
+
+            <!-- OTHER TOOLS -->
+
+            <a href="tools/index.html" class="category-card">
+
+                <h3>🛠️ Useful Tools</h3>
+
+                <p>
+                    Unit converter, word counter,
+                    QR generator and more.
+                </p>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= POPULAR TOOLS ================= -->
+
+<section>
+
+    <div class="container">
+
+        <h2>Popular Tools</h2>
+
+        <div class="tool-grid">
+
+            <!-- CGPA -->
+
+            <a href="calculators/cgpa.html"
+               class="tool-card searchable-tool"
+               data-name="CGPA Calculator">
+
+                <h3>🎓 CGPA Calculator</h3>
+
+                <p>
+                    Calculate your CGPA using subject
+                    credits and grade points.
+                </p>
+
+            </a>
+
+
+            <!-- ATTENDANCE -->
+
+            <a href="calculators/attendance.html"
+               class="tool-card searchable-tool"
+               data-name="Attendance Calculator">
+
+                <h3>📊 Attendance Calculator</h3>
+
+                <p>
+                    Calculate your attendance percentage
+                    quickly and easily.
+                </p>
+
+            </a>
+
+
+            <!-- PERCENTAGE -->
+
+            <a href="calculators/percentage.html"
+               class="tool-card searchable-tool"
+               data-name="Percentage Calculator">
+
+                <h3>📈 Percentage Calculator</h3>
+
+                <p>
+                    Calculate percentages quickly
+                    and accurately.
+                </p>
+
+            </a>
+
+
+            <!-- RESUME -->
+
+            <a href="career-tools/resume-builder.html"
+               class="tool-card searchable-tool"
+               data-name="Resume Builder CV Resume Maker">
+
+                <h3>📄 Resume Builder</h3>
+
+                <p>
+                    Create a professional resume
+                    with live preview.
+                </p>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= WHY US ================= -->
+
+<section class="why-us">
+
+    <div class="container">
+
+        <h2>Why Student Utility Hub?</h2>
+
+        <div class="features">
+
+            <div>
+                <h3>⚡ Fast & Simple</h3>
+                <p>
+                    Easy-to-use tools designed to
+                    give quick results.
+                </p>
+            </div>
+
+            <div>
+                <h3>🆓 Free to Use</h3>
+                <p>
+                    Access useful student tools
+                    without unnecessary complexity.
+                </p>
+            </div>
+
+            <div>
+                <h3>📱 Mobile Friendly</h3>
+                <p>
+                    Use the tools comfortably on
+                    phones, tablets and computers.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <div class="container footer-content">
+
+        <div>
+
+            <h3>Student Utility Hub</h3>
+
+            <p>
+                Free tools for smarter student life.
+            </p>
+
+        </div>
+
+
+        <div class="footer-links">
+
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+            <a href="privacy-policy.html">Privacy Policy</a>
+            <a href="terms.html">Terms</a>
+            <a href="disclaimer.html">Disclaimer</a>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        © 2026 Student Utility Hub. All rights reserved.
+
+    </div>
+
+</footer>
+
+
+<script src="js/script.js"></script>
+
+</body>
+</html>

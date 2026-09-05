@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>EMI Calculator - Calculate Monthly EMI</title>
+
+    <meta name="description" content="Calculate your monthly EMI, total interest and total payment with this free online EMI calculator.">
+    <meta name="robots" content="index, follow">
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+<header>
+    <div class="container navbar">
+
+        <div class="logo">Student Utility Hub</div>
+
+        <button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+        <nav id="navMenu">
+            <a href="../index.html">Home</a>
+            <a href="index.html">Calculators</a>
+            <a href="../study-tools/index.html">Study Tools</a>
+            <a href="../career-tools/index.html">Career</a>
+            <a href="../tools/index.html">Tools</a>
+        </nav>
+
+    </div>
+</header>
+
+
+<main class="container">
+
+    <section class="calculator-page">
+
+        <h1>EMI Calculator</h1>
+
+        <p>
+            Calculate your monthly loan EMI, total interest and total payment.
+        </p>
+
+
+        <div class="calculator-box">
+
+            <label for="loanAmount">
+                Loan Amount (₹)
+            </label>
+
+            <input
+                type="number"
+                id="loanAmount"
+                placeholder="Example: 500000"
+                min="0"
+            >
+
+
+            <label for="interestRate">
+                Annual Interest Rate (%)
+            </label>
+
+            <input
+                type="number"
+                id="interestRate"
+                placeholder="Example: 8.5"
+                min="0"
+                step="0.01"
+            >
+
+
+            <label for="loanTenure">
+                Loan Tenure (Years)
+            </label>
+
+            <input
+                type="number"
+                id="loanTenure"
+                placeholder="Example: 5"
+                min="1"
+                step="1"
+            >
+
+
+            <button onclick="calculateEMI()">
+                Calculate EMI
+            </button>
+
+            <button class="reset-btn" onclick="resetEMI()">
+                Reset
+            </button>
+
+
+            <div id="emi-result" class="result"></div>
+
+        </div>
+
+
+        <section class="info-section">
+
+            <h2>How is EMI calculated?</h2>
+
+            <p>
+                The standard EMI formula is:
+            </p>
+
+            <div class="formula">
+                EMI = P × R × (1 + R)ⁿ ÷ ((1 + R)ⁿ − 1)
+            </div>
+
+            <p>
+                Where:
+            </p>
+
+            <p>
+                P = Loan principal amount
+            </p>
+
+            <p>
+                R = Monthly interest rate
+            </p>
+
+            <p>
+                n = Total number of monthly payments
+            </p>
+
+
+            <h3>Example</h3>
+
+            <p>
+                For a ₹5,00,000 loan at 8.5% annual interest
+                for 5 years, enter:
+            </p>
+
+            <div class="formula">
+                Loan Amount = ₹5,00,000<br>
+                Interest Rate = 8.5%<br>
+                Tenure = 5 years
+            </div>
+
+        </section>
+
+    </section>
+
+</main>
+
+
+<footer>
+    <div class="container">
+        <p>© 2026 Student Utility Hub. All rights reserved.</p>
+    </div>
+</footer>
+
+
+<script src="../js/script.js"></script>
+
+
+<script>
+
+function calculateEMI() {
+
+    const principal =
+        parseFloat(document.getElementById("loanAmount").value);
+
+    const annualRate =
+        parseFloat(document.getElementById("interestRate").value);
+
+    const years =
+        parseFloat(document.getElementById("loanTenure").value);
+
+    const resultBox =
+        document.getElementById("emi-result");
+
+
+    if (
+        isNaN(principal) ||
+        isNaN(annualRate) ||
+        isNaN(years)
+    ) {
+
+        resultBox.innerHTML =
+            "Please enter all values.";
+
+        return;
+    }
+
+
+    if (
+        principal <= 0 ||
+        annualRate < 0 ||
+        years <= 0
+    ) {
+
+        resultBox.innerHTML =
+            "Please enter valid values.";
+
+        return;
+    }
+
+
+    const monthlyRate =
+        annualRate / 12 / 100;
+
+    const numberOfPayments =
+        years * 12;
+
+
+    let emi;
+
+
+    if (monthlyRate === 0) {
+
+        emi =
+            principal / numberOfPayments;
+
+    } else {
+
+        emi =
+            principal *
+            monthlyRate *
+            Math.pow(1 + monthlyRate, numberOfPayments) /
+            (Math.pow(1 + monthlyRate, numberOfPayments) - 1);
+    }
+
+
+    const totalPayment =
+        emi * numberOfPayments;
+
+    const totalInterest =
+        totalPayment - principal;
+
+
+    resultBox.innerHTML = `
+        <p>Monthly EMI:
+        <strong>₹${emi.toFixed(2)}</strong></p>
+
+        <p>Total Interest:
+        <strong>₹${totalInterest.toFixed(2)}</strong></p>
+
+        <p>Total Payment:
+        <strong>₹${totalPayment.toFixed(2)}</strong></p>
+    `;
+}
+
+
+function resetEMI() {
+
+    document.getElementById("loanAmount").value = "";
+
+    document.getElementById("interestRate").value = "";
+
+    document.getElementById("loanTenure").value = "";
+
+    document.getElementById("emi-result").innerHTML = "";
+}
+
+</script>
+
+</body>
+</html>

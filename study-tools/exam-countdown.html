@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Exam Countdown - Free Exam Countdown Timer</title>
+    <meta name="description" content="Track the time remaining until your next exam with this free online exam countdown timer.">
+    <meta name="robots" content="index, follow">
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container nav-container">
+
+            <a href="../index.html" class="logo">
+                Student Utility Hub
+            </a>
+
+            <button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+            <nav id="navMenu">
+                <a href="../index.html">Home</a>
+                <a href="../index.html#tools">Tools</a>
+                <a href="../index.html#about">About</a>
+            </nav>
+
+        </div>
+    </header>
+
+
+    <!-- Main -->
+    <main class="container">
+
+        <div class="calculator-page">
+
+            <h1>Exam Countdown</h1>
+
+            <p class="tool-intro">
+                Set your exam date and see exactly how much time is left.
+            </p>
+
+
+            <!-- Exam Settings -->
+            <div class="calculator-box">
+
+                <h2>Set Your Exam</h2>
+
+                <label for="examName">Exam Name</label>
+
+                <input
+                    type="text"
+                    id="examName"
+                    placeholder="e.g. Mathematics Exam"
+                >
+
+
+                <label for="examDate">Exam Date</label>
+
+                <input
+                    type="date"
+                    id="examDate"
+                >
+
+
+                <label for="examTime">Exam Time</label>
+
+                <input
+                    type="time"
+                    id="examTime"
+                    value="09:00"
+                >
+
+
+                <button onclick="startCountdown()" class="calculate-btn">
+                    Start Countdown
+                </button>
+
+                <button onclick="resetCountdown()" class="reset-btn">
+                    Reset
+                </button>
+
+            </div>
+
+
+            <!-- Countdown -->
+            <div class="calculator-box">
+
+                <h2 id="countdownTitle">
+                    Your Exam Countdown
+                </h2>
+
+                <div class="countdown-grid">
+
+                    <div class="countdown-item">
+                        <span id="days">00</span>
+                        <small>Days</small>
+                    </div>
+
+                    <div class="countdown-item">
+                        <span id="hours">00</span>
+                        <small>Hours</small>
+                    </div>
+
+                    <div class="countdown-item">
+                        <span id="minutes">00</span>
+                        <small>Minutes</small>
+                    </div>
+
+                    <div class="countdown-item">
+                        <span id="seconds">00</span>
+                        <small>Seconds</small>
+                    </div>
+
+                </div>
+
+                <p id="countdownMessage"></p>
+
+            </div>
+
+
+            <!-- Explanation -->
+            <section class="explanation">
+
+                <h2>How to Use the Exam Countdown</h2>
+
+                <ol>
+                    <li>Enter your exam name.</li>
+                    <li>Select your exam date.</li>
+                    <li>Select the exam time.</li>
+                    <li>Click "Start Countdown".</li>
+                    <li>Your remaining time will update every second.</li>
+                </ol>
+
+                <h3>Why use an exam countdown?</h3>
+
+                <p>
+                    Knowing how much time remains can help you plan your
+                    revision schedule and stay focused on your preparation.
+                </p>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+
+        <div class="container">
+
+            <p>
+                © 2026 Student Utility Hub. All rights reserved.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <script src="../js/script.js"></script>
+
+    <script>
+
+        let countdownInterval = null;
+        let examDateTime = null;
+
+
+        function startCountdown() {
+
+            const examName =
+                document.getElementById("examName").value.trim();
+
+            const date =
+                document.getElementById("examDate").value;
+
+            const time =
+                document.getElementById("examTime").value;
+
+
+            if (!date || !time) {
+
+                alert("Please select the exam date and time.");
+
+                return;
+            }
+
+
+            examDateTime = new Date(`${date}T${time}`);
+
+
+            if (examDateTime <= new Date()) {
+
+                alert("Please select a future date and time.");
+
+                return;
+            }
+
+
+            if (examName) {
+
+                document.getElementById("countdownTitle").textContent =
+                    examName;
+            } else {
+
+                document.getElementById("countdownTitle").textContent =
+                    "Your Exam Countdown";
+            }
+
+
+            clearInterval(countdownInterval);
+
+            updateCountdown();
+
+            countdownInterval = setInterval(
+                updateCountdown,
+                1000
+            );
+        }
+
+
+        function updateCountdown() {
+
+            const now = new Date();
+
+            const difference =
+                examDateTime - now;
+
+
+            if (difference <= 0) {
+
+                clearInterval(countdownInterval);
+
+                document.getElementById("days").textContent = "00";
+                document.getElementById("hours").textContent = "00";
+                document.getElementById("minutes").textContent = "00";
+                document.getElementById("seconds").textContent = "00";
+
+                document.getElementById("countdownMessage").textContent =
+                    "🎉 Your exam time has arrived!";
+
+                return;
+            }
+
+
+            const days =
+                Math.floor(difference / (1000 * 60 * 60 * 24));
+
+            const hours =
+                Math.floor(
+                    (difference / (1000 * 60 * 60)) % 24
+                );
+
+            const minutes =
+                Math.floor(
+                    (difference / (1000 * 60)) % 60
+                );
+
+            const seconds =
+                Math.floor(
+                    (difference / 1000) % 60
+                );
+
+
+            document.getElementById("days").textContent =
+                String(days).padStart(2, "0");
+
+            document.getElementById("hours").textContent =
+                String(hours).padStart(2, "0");
+
+            document.getElementById("minutes").textContent =
+                String(minutes).padStart(2, "0");
+
+            document.getElementById("seconds").textContent =
+                String(seconds).padStart(2, "0");
+
+            document.getElementById("countdownMessage").textContent =
+                "Keep preparing. You've got this! 💪";
+        }
+
+
+        function resetCountdown() {
+
+            clearInterval(countdownInterval);
+
+            countdownInterval = null;
+
+            examDateTime = null;
+
+
+            document.getElementById("examName").value = "";
+
+            document.getElementById("examDate").value = "";
+
+            document.getElementById("examTime").value = "09:00";
+
+
+            document.getElementById("countdownTitle").textContent =
+                "Your Exam Countdown";
+
+
+            document.getElementById("days").textContent = "00";
+            document.getElementById("hours").textContent = "00";
+            document.getElementById("minutes").textContent = "00";
+            document.getElementById("seconds").textContent = "00";
+
+            document.getElementById("countdownMessage").textContent = "";
+        }
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Timetable Generator - Create Your Study Schedule</title>
+    <meta name="description" content="Create an organized study timetable with this free online timetable generator. Plan your subjects, classes and study sessions easily.">
+    <meta name="robots" content="index, follow">
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container nav-container">
+
+            <a href="../index.html" class="logo">
+                Student Utility Hub
+            </a>
+
+            <button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+            <nav id="navMenu">
+                <a href="../index.html">Home</a>
+                <a href="../index.html#tools">Tools</a>
+                <a href="../index.html#about">About</a>
+            </nav>
+
+        </div>
+    </header>
+
+
+    <!-- Main -->
+    <main class="container">
+
+        <div class="calculator-page">
+
+            <h1>Timetable Generator</h1>
+
+            <p class="tool-intro">
+                Create a simple weekly study timetable and organize
+                your study sessions.
+            </p>
+
+
+            <!-- Add Session -->
+            <div class="calculator-box">
+
+                <h2>Add Study Session</h2>
+
+                <label for="day">Day</label>
+
+                <select id="day">
+                    <option value="Monday">Monday</option>
+                    <option value="Tuesday">Tuesday</option>
+                    <option value="Wednesday">Wednesday</option>
+                    <option value="Thursday">Thursday</option>
+                    <option value="Friday">Friday</option>
+                    <option value="Saturday">Saturday</option>
+                    <option value="Sunday">Sunday</option>
+                </select>
+
+
+                <label for="subject">Subject</label>
+
+                <input
+                    type="text"
+                    id="subject"
+                    placeholder="e.g. Mathematics"
+                >
+
+
+                <label for="startTime">Start Time</label>
+
+                <input
+                    type="time"
+                    id="startTime"
+                >
+
+
+                <label for="endTime">End Time</label>
+
+                <input
+                    type="time"
+                    id="endTime"
+                >
+
+
+                <button
+                    onclick="addSession()"
+                    class="calculate-btn"
+                >
+                    Add Session
+                </button>
+
+            </div>
+
+
+            <!-- Timetable -->
+            <div class="calculator-box">
+
+                <h2>My Weekly Timetable</h2>
+
+                <div id="timetable">
+
+                    <p class="empty-message">
+                        No study sessions added yet.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- Explanation -->
+            <section class="explanation">
+
+                <h2>How to Use the Timetable Generator</h2>
+
+                <ol>
+                    <li>Select a day.</li>
+                    <li>Enter your subject.</li>
+                    <li>Choose the start and end time.</li>
+                    <li>Click "Add Session".</li>
+                    <li>Repeat to build your weekly timetable.</li>
+                </ol>
+
+                <h3>Study Planning Tip</h3>
+
+                <p>
+                    Try to divide your study time between different subjects
+                    and include short breaks between longer sessions.
+                </p>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+
+        <div class="container">
+
+            <p>
+                © 2026 Student Utility Hub. All rights reserved.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <script src="../js/script.js"></script>
+
+    <script>
+
+        let sessions = [];
+
+
+        function addSession() {
+
+            const day =
+                document.getElementById("day").value;
+
+            const subject =
+                document.getElementById("subject").value.trim();
+
+            const startTime =
+                document.getElementById("startTime").value;
+
+            const endTime =
+                document.getElementById("endTime").value;
+
+
+            if (!subject || !startTime || !endTime) {
+
+                alert("Please fill in all fields.");
+
+                return;
+            }
+
+
+            if (startTime >= endTime) {
+
+                alert("End time must be after start time.");
+
+                return;
+            }
+
+
+            sessions.push({
+                day: day,
+                subject: subject,
+                startTime: startTime,
+                endTime: endTime
+            });
+
+
+            document.getElementById("subject").value = "";
+            document.getElementById("startTime").value = "";
+            document.getElementById("endTime").value = "";
+
+
+            displayTimetable();
+        }
+
+
+        function deleteSession(index) {
+
+            sessions.splice(index, 1);
+
+            displayTimetable();
+        }
+
+
+        function displayTimetable() {
+
+            const timetable =
+                document.getElementById("timetable");
+
+
+            if (sessions.length === 0) {
+
+                timetable.innerHTML = `
+                    <p class="empty-message">
+                        No study sessions added yet.
+                    </p>
+                `;
+
+                return;
+            }
+
+
+            const days = [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday",
+                "Sunday"
+            ];
+
+
+            let html = "";
+
+
+            days.forEach(function(day) {
+
+                const daySessions =
+                    sessions.filter(
+                        session => session.day === day
+                    );
+
+
+                if (daySessions.length === 0) {
+                    return;
+                }
+
+
+                daySessions.sort(function(a, b) {
+
+                    return a.startTime.localeCompare(
+                        b.startTime
+                    );
+
+                });
+
+
+                html += `
+                    <div class="timetable-day">
+
+                        <h3>${day}</h3>
+                `;
+
+
+                daySessions.forEach(function(session) {
+
+                    const index =
+                        sessions.indexOf(session);
+
+
+                    html += `
+                        <div class="timetable-session">
+
+                            <div>
+                                <strong>
+                                    ${session.subject}
+                                </strong>
+
+                                <span>
+                                    ${session.startTime}
+                                    -
+                                    ${session.endTime}
+                                </span>
+                            </div>
+
+                            <button
+                                onclick="deleteSession(${index})"
+                                class="delete-btn"
+                            >
+                                Delete
+                            </button>
+
+                        </div>
+                    `;
+                });
+
+
+                html += `</div>`;
+            });
+
+
+            timetable.innerHTML = html;
+        }
+
+    </script>
+
+</body>
+</html>

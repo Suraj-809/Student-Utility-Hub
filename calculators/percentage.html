@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Percentage Calculator - Free Online Calculator</title>
+    <meta name="description" content="Calculate percentages quickly and accurately with this free online percentage calculator. Useful for marks, scores, discounts and everyday calculations.">
+    <meta name="robots" content="index, follow">
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+<header>
+    <div class="container navbar">
+
+        <div class="logo">Student Utility Hub</div>
+
+        <button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+        <nav id="navMenu">
+            <a href="../index.html">Home</a>
+            <a href="index.html">Calculators</a>
+            <a href="../study-tools/index.html">Study Tools</a>
+            <a href="../career-tools/index.html">Career</a>
+            <a href="../tools/index.html">Tools</a>
+        </nav>
+
+    </div>
+</header>
+
+
+<main class="container">
+
+    <section class="calculator-page">
+
+        <h1>Percentage Calculator</h1>
+
+        <p>
+            Calculate percentages quickly and easily using this free
+            percentage calculator.
+        </p>
+
+
+        <div class="calculator-box">
+
+            <label for="number">Enter Number</label>
+
+            <input
+                type="number"
+                id="number"
+                placeholder="Example: 500"
+            >
+
+
+            <label for="percentage">Enter Percentage</label>
+
+            <input
+                type="number"
+                id="percentage"
+                placeholder="Example: 20"
+            >
+
+
+            <button onclick="calculatePercentage()">
+                Calculate
+            </button>
+
+            <button class="reset-btn" onclick="resetCalculator()">
+                Reset
+            </button>
+
+
+            <div id="result" class="result"></div>
+
+        </div>
+
+
+        <section class="info-section">
+
+            <h2>How to Calculate Percentage?</h2>
+
+            <p>
+                To calculate a percentage of a number, use the formula:
+            </p>
+
+            <div class="formula">
+                Percentage Result = Number × Percentage ÷ 100
+            </div>
+
+            <h3>Example</h3>
+
+            <p>
+                If you want to calculate 20% of 500:
+            </p>
+
+            <div class="formula">
+                500 × 20 ÷ 100 = 100
+            </div>
+
+        </section>
+
+    </section>
+
+</main>
+
+
+<footer>
+    <div class="container">
+        <p>© 2026 Student Utility Hub. All rights reserved.</p>
+    </div>
+</footer>
+
+
+<script src="../js/script.js"></script>
+
+<script>
+
+function calculatePercentage() {
+
+    const number = parseFloat(
+        document.getElementById("number").value
+    );
+
+    const percentage = parseFloat(
+        document.getElementById("percentage").value
+    );
+
+    const resultBox = document.getElementById("result");
+
+
+    if (isNaN(number) || isNaN(percentage)) {
+
+        resultBox.innerHTML =
+            "Please enter both values.";
+
+        return;
+    }
+
+
+    const result = (number * percentage) / 100;
+
+
+    resultBox.innerHTML =
+        `${percentage}% of ${number} = <strong>${result}</strong>`;
+}
+
+
+function resetCalculator() {
+
+    document.getElementById("number").value = "";
+
+    document.getElementById("percentage").value = "";
+
+    document.getElementById("result").innerHTML = "";
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Word Counter - Free Online Word Counter Tool</title>
+    <meta name="description" content="Count words, characters and reading time easily with this free online word counter tool.">
+    <meta name="robots" content="index, follow">
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container nav-container">
+
+            <a href="../index.html" class="logo">
+                Student Utility Hub
+            </a>
+
+            <button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+            <nav id="navMenu">
+                <a href="../index.html">Home</a>
+                <a href="../index.html#tools">Tools</a>
+                <a href="../index.html#about">About</a>
+            </nav>
+
+        </div>
+    </header>
+
+
+    <!-- Main -->
+    <main class="container">
+
+        <div class="calculator-page">
+
+            <h1>Word Counter</h1>
+
+            <p class="tool-intro">
+                Count words and characters in your text instantly.
+            </p>
+
+
+            <!-- Word Counter -->
+            <div class="calculator-box">
+
+                <h2>Enter Your Text</h2>
+
+                <textarea
+                    id="textInput"
+                    rows="12"
+                    placeholder="Type or paste your text here..."
+                ></textarea>
+
+
+                <div class="word-counter-stats">
+
+                    <div class="counter-stat">
+                        <span id="wordCount">0</span>
+                        <small>Words</small>
+                    </div>
+
+                    <div class="counter-stat">
+                        <span id="characterCount">0</span>
+                        <small>Characters</small>
+                    </div>
+
+                    <div class="counter-stat">
+                        <span id="characterNoSpace">0</span>
+                        <small>Without Spaces</small>
+                    </div>
+
+                    <div class="counter-stat">
+                        <span id="readingTime">0 min</span>
+                        <small>Reading Time</small>
+                    </div>
+
+                </div>
+
+
+                <button
+                    onclick="clearText()"
+                    class="reset-btn"
+                >
+                    Clear
+                </button>
+
+            </div>
+
+
+            <!-- Explanation -->
+            <section class="explanation">
+
+                <h2>How to Use the Word Counter</h2>
+
+                <ol>
+                    <li>Type or paste your text into the box.</li>
+                    <li>Your word count updates automatically.</li>
+                    <li>Check your character count and reading time.</li>
+                    <li>Click Clear to remove all text.</li>
+                </ol>
+
+                <h3>Estimated Reading Time</h3>
+
+                <p>
+                    Reading time is estimated using approximately
+                    200 words per minute.
+                </p>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+
+        <div class="container">
+
+            <p>
+                © 2026 Student Utility Hub. All rights reserved.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <script src="../js/script.js"></script>
+
+    <script>
+
+        const textInput =
+            document.getElementById("textInput");
+
+
+        textInput.addEventListener(
+            "input",
+            updateCounter
+        );
+
+
+        function updateCounter() {
+
+            const text = textInput.value;
+
+
+            // Word count
+            const words = text.trim() === ""
+                ? []
+                : text.trim().split(/\s+/);
+
+
+            const wordCount = words.length;
+
+
+            // Character count
+            const characterCount =
+                text.length;
+
+
+            // Character count without spaces
+            const characterNoSpace =
+                text.replace(/\s/g, "").length;
+
+
+            // Reading time
+            const readingMinutes =
+                wordCount / 200;
+
+
+            let readingTime;
+
+            if (wordCount === 0) {
+
+                readingTime = "0 min";
+
+            } else if (readingMinutes < 1) {
+
+                readingTime = "< 1 min";
+
+            } else {
+
+                readingTime =
+                    Math.ceil(readingMinutes) + " min";
+            }
+
+
+            // Update UI
+            document.getElementById("wordCount")
+                .textContent = wordCount;
+
+            document.getElementById("characterCount")
+                .textContent = characterCount;
+
+            document.getElementById("characterNoSpace")
+                .textContent = characterNoSpace;
+
+            document.getElementById("readingTime")
+                .textContent = readingTime;
+        }
+
+
+        function clearText() {
+
+            textInput.value = "";
+
+            updateCounter();
+
+            textInput.focus();
+        }
+
+    </script>
+
+</body>
+</html>

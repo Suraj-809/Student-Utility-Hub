@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Pomodoro Timer - Free Online Study Timer</title>
+    <meta name="description" content="Use this free Pomodoro timer to improve your study focus with customizable study and break sessions.">
+    <meta name="robots" content="index, follow">
+    
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container nav-container">
+
+            <a href="../index.html" class="logo">
+                Student Utility Hub
+            </a>
+
+            <button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+            <nav id="navMenu">
+                <a href="../index.html">Home</a>
+                <a href="../index.html#tools">Tools</a>
+                <a href="../index.html#about">About</a>
+            </nav>
+
+        </div>
+    </header>
+
+
+    <!-- Main -->
+    <main class="container">
+
+        <div class="calculator-page">
+
+            <h1>Pomodoro Timer</h1>
+
+            <p class="tool-intro">
+                Customize your study and break duration and stay focused
+                with the Pomodoro technique.
+            </p>
+
+
+            <!-- Settings -->
+            <div class="calculator-box">
+
+                <h2>Timer Settings</h2>
+
+                <label for="studyTime">Study Duration (minutes)</label>
+
+                <input
+                    type="number"
+                    id="studyTime"
+                    value="25"
+                    min="1"
+                    max="180"
+                >
+
+
+                <label for="breakTime">Break Duration (minutes)</label>
+
+                <input
+                    type="number"
+                    id="breakTime"
+                    value="5"
+                    min="1"
+                    max="60"
+                >
+
+
+                <button onclick="applySettings()" class="calculate-btn">
+                    Apply Settings
+                </button>
+
+            </div>
+
+
+            <!-- Timer -->
+            <div class="calculator-box">
+
+                <h2 id="sessionType">Study Session</h2>
+
+                <div class="timer-display" id="timer">
+                    25:00
+                </div>
+
+
+                <div class="timer-buttons">
+
+                    <button onclick="startTimer()" class="calculate-btn">
+                        Start
+                    </button>
+
+                    <button onclick="pauseTimer()" class="reset-btn">
+                        Pause
+                    </button>
+
+                    <button onclick="resetTimer()" class="reset-btn">
+                        Reset
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- Explanation -->
+            <section class="explanation">
+
+                <h2>How to Use the Pomodoro Timer</h2>
+
+                <p>
+                    Choose how long you want to study and how long you want
+                    your break to be. Start the timer and focus until the
+                    session ends.
+                </p>
+
+                <h3>How it works</h3>
+
+                <ol>
+                    <li>Set your study duration.</li>
+                    <li>Set your break duration.</li>
+                    <li>Click Apply Settings.</li>
+                    <li>Start your study session.</li>
+                    <li>A beep will play when the session finishes.</li>
+                    <li>The timer automatically switches to the next session.</li>
+                </ol>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+
+        <div class="container">
+
+            <p>
+                © 2026 Student Utility Hub. All rights reserved.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <script src="../js/script.js"></script>
+
+
+    <script>
+
+        let studyMinutes = 25;
+        let breakMinutes = 5;
+
+        let timeLeft = studyMinutes * 60;
+
+        let timerInterval = null;
+
+        let isStudySession = true;
+
+
+        /* -------------------------
+           DISPLAY TIMER
+        ------------------------- */
+
+        function updateDisplay() {
+
+            const minutes = Math.floor(timeLeft / 60);
+
+            const seconds = timeLeft % 60;
+
+            document.getElementById("timer").textContent =
+                String(minutes).padStart(2, "0") +
+                ":" +
+                String(seconds).padStart(2, "0");
+        }
+
+
+        /* -------------------------
+           BEEP SOUND
+        ------------------------- */
+
+        function playBeep() {
+
+            const audioContext =
+                new (window.AudioContext || window.webkitAudioContext)();
+
+            const oscillator =
+                audioContext.createOscillator();
+
+            const gainNode =
+                audioContext.createGain();
+
+
+            oscillator.connect(gainNode);
+
+            gainNode.connect(audioContext.destination);
+
+
+            oscillator.frequency.value = 800;
+
+            oscillator.type = "sine";
+
+
+            gainNode.gain.setValueAtTime(
+                0.3,
+                audioContext.currentTime
+            );
+
+            gainNode.gain.exponentialRampToValueAtTime(
+                0.001,
+                audioContext.currentTime + 0.8
+            );
+
+
+            oscillator.start();
+
+            oscillator.stop(
+                audioContext.currentTime + 0.8
+            );
+        }
+
+
+        /* -------------------------
+           START TIMER
+        ------------------------- */
+
+        function startTimer() {
+
+            if (timerInterval !== null) {
+                return;
+            }
+
+
+            timerInterval = setInterval(function () {
+
+                if (timeLeft > 0) {
+
+                    timeLeft--;
+
+                    updateDisplay();
+
+                } else {
+
+                    playBeep();
+
+                    switchSession();
+
+                }
+
+            }, 1000);
+        }
+
+
+        /* -------------------------
+           PAUSE TIMER
+        ------------------------- */
+
+        function pauseTimer() {
+
+            clearInterval(timerInterval);
+
+            timerInterval = null;
+        }
+
+
+        /* -------------------------
+           RESET TIMER
+        ------------------------- */
+
+        function resetTimer() {
+
+            clearInterval(timerInterval);
+
+            timerInterval = null;
+
+            isStudySession = true;
+
+            timeLeft = studyMinutes * 60;
+
+
+            document.getElementById("sessionType").textContent =
+                "Study Session";
+
+
+            updateDisplay();
+        }
+
+
+        /* -------------------------
+           SWITCH SESSION
+        ------------------------- */
+
+        function switchSession() {
+
+            clearInterval(timerInterval);
+
+            timerInterval = null;
+
+
+            if (isStudySession) {
+
+                isStudySession = false;
+
+                timeLeft = breakMinutes * 60;
+
+                document.getElementById("sessionType").textContent =
+                    "Break Time";
+
+            } else {
+
+                isStudySession = true;
+
+                timeLeft = studyMinutes * 60;
+
+                document.getElementById("sessionType").textContent =
+                    "Study Session";
+            }
+
+
+            updateDisplay();
+
+
+            // Automatically start next session
+            startTimer();
+        }
+
+
+        /* -------------------------
+           APPLY SETTINGS
+        ------------------------- */
+
+        function applySettings() {
+
+            const newStudyTime =
+                Number(document.getElementById("studyTime").value);
+
+            const newBreakTime =
+                Number(document.getElementById("breakTime").value);
+
+
+            if (
+                newStudyTime < 1 ||
+                newStudyTime > 180 ||
+                newBreakTime < 1 ||
+                newBreakTime > 60
+            ) {
+
+                alert(
+                    "Please enter valid durations."
+                );
+
+                return;
+            }
+
+
+            studyMinutes = newStudyTime;
+
+            breakMinutes = newBreakTime;
+
+
+            clearInterval(timerInterval);
+
+            timerInterval = null;
+
+
+            isStudySession = true;
+
+            timeLeft = studyMinutes * 60;
+
+
+            document.getElementById("sessionType").textContent =
+                "Study Session";
+
+
+            updateDisplay();
+        }
+
+
+        updateDisplay();
+
+    </script>
+
+</body>
+</html>

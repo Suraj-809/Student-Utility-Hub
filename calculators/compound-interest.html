@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Compound Interest Calculator - Free Online Calculator</title>
+
+    <meta name="description" content="Calculate compound interest and total amount easily with this free online compound interest calculator. Choose different compounding frequencies for accurate results.">
+    <meta name="robots" content="index, follow">
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+<header>
+    <div class="container navbar">
+
+        <div class="logo">Student Utility Hub</div>
+
+        <button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+        <nav id="navMenu">
+            <a href="../index.html">Home</a>
+            <a href="index.html">Calculators</a>
+            <a href="../study-tools/index.html">Study Tools</a>
+            <a href="../career-tools/index.html">Career</a>
+            <a href="../tools/index.html">Tools</a>
+        </nav>
+
+    </div>
+</header>
+
+
+<main class="container">
+
+    <section class="calculator-page">
+
+        <h1>Compound Interest Calculator</h1>
+
+        <p>
+            Calculate compound interest and the final amount easily.
+        </p>
+
+
+        <div class="calculator-box">
+
+            <label for="principal">
+                Principal Amount (₹)
+            </label>
+
+            <input
+                type="number"
+                id="principal"
+                placeholder="Example: 10000"
+                min="0"
+            >
+
+
+            <label for="rate">
+                Annual Interest Rate (%)
+            </label>
+
+            <input
+                type="number"
+                id="rate"
+                placeholder="Example: 8"
+                min="0"
+                step="0.01"
+            >
+
+
+            <label for="time">
+                Time (Years)
+            </label>
+
+            <input
+                type="number"
+                id="time"
+                placeholder="Example: 5"
+                min="0"
+                step="0.1"
+            >
+
+
+            <label for="frequency">
+                Compounding Frequency
+            </label>
+
+            <select id="frequency">
+
+                <option value="1">
+                    Annually
+                </option>
+
+                <option value="2">
+                    Half-Yearly
+                </option>
+
+                <option value="4">
+                    Quarterly
+                </option>
+
+                <option value="12">
+                    Monthly
+                </option>
+
+            </select>
+
+
+            <button onclick="calculateCI()">
+                Calculate
+            </button>
+
+            <button class="reset-btn" onclick="resetCI()">
+                Reset
+            </button>
+
+
+            <div id="ci-result" class="result"></div>
+
+        </div>
+
+
+        <section class="info-section">
+
+            <h2>How is Compound Interest calculated?</h2>
+
+            <p>
+                Compound Interest is calculated using:
+            </p>
+
+            <div class="formula">
+                A = P(1 + R/n)ⁿᵗ
+            </div>
+
+            <p>
+                Compound Interest:
+            </p>
+
+            <div class="formula">
+                CI = A − P
+            </div>
+
+            <p>
+                Where:
+            </p>
+
+            <p>
+                P = Principal Amount
+            </p>
+
+            <p>
+                R = Annual Interest Rate
+            </p>
+
+            <p>
+                n = Number of times interest is compounded per year
+            </p>
+
+            <p>
+                t = Time in years
+            </p>
+
+
+            <h3>Example</h3>
+
+            <p>
+                For ₹10,000 at 8% annual interest for 5 years,
+                compounded annually:
+            </p>
+
+            <div class="formula">
+                A = 10000 × (1 + 0.08)⁵
+            </div>
+
+        </section>
+
+    </section>
+
+</main>
+
+
+<footer>
+    <div class="container">
+        <p>© 2026 Student Utility Hub. All rights reserved.</p>
+    </div>
+</footer>
+
+
+<script src="../js/script.js"></script>
+
+
+<script>
+
+function calculateCI() {
+
+    const principal =
+        parseFloat(document.getElementById("principal").value);
+
+    const rate =
+        parseFloat(document.getElementById("rate").value);
+
+    const time =
+        parseFloat(document.getElementById("time").value);
+
+    const frequency =
+        parseInt(document.getElementById("frequency").value);
+
+    const resultBox =
+        document.getElementById("ci-result");
+
+
+    if (
+        isNaN(principal) ||
+        isNaN(rate) ||
+        isNaN(time)
+    ) {
+
+        resultBox.innerHTML =
+            "Please enter all values.";
+
+        return;
+    }
+
+
+    if (
+        principal < 0 ||
+        rate < 0 ||
+        time < 0
+    ) {
+
+        resultBox.innerHTML =
+            "Please enter valid values.";
+
+        return;
+    }
+
+
+    const decimalRate =
+        rate / 100;
+
+
+    const amount =
+        principal *
+        Math.pow(
+            1 + decimalRate / frequency,
+            frequency * time
+        );
+
+
+    const compoundInterest =
+        amount - principal;
+
+
+    resultBox.innerHTML = `
+        <p>Compound Interest:
+        <strong>₹${compoundInterest.toFixed(2)}</strong></p>
+
+        <p>Total Amount:
+        <strong>₹${amount.toFixed(2)}</strong></p>
+    `;
+}
+
+
+function resetCI() {
+
+    document.getElementById("principal").value = "";
+
+    document.getElementById("rate").value = "";
+
+    document.getElementById("time").value = "";
+
+    document.getElementById("frequency").value = "1";
+
+    document.getElementById("ci-result").innerHTML = "";
+}
+
+</script>
+
+</body>
+</html>

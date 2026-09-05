@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Unit Converter - Free Online Unit Conversion Tool</title>
+
+    <meta name="description" content="Convert length, weight and temperature units easily with this free online unit converter.">
+    <meta name="robots" content="index, follow">
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+<header>
+    <div class="container navbar">
+
+        <div class="logo">Student Utility Hub</div>
+
+        <button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+        <nav id="navMenu">
+            <a href="../index.html">Home</a>
+            <a href="../calculators/index.html">Calculators</a>
+            <a href="../study-tools/index.html">Study Tools</a>
+            <a href="../career-tools/index.html">Career</a>
+            <a href="index.html">Tools</a>
+        </nav>
+
+    </div>
+</header>
+
+
+<main class="container">
+
+    <section class="calculator-page">
+
+        <h1>Unit Converter</h1>
+
+        <p>
+            Convert length, weight and temperature units quickly.
+        </p>
+
+
+        <div class="calculator-box">
+
+            <label for="category">
+                Conversion Type
+            </label>
+
+            <select id="category" onchange="loadUnits()">
+                <option value="length">Length</option>
+                <option value="weight">Weight</option>
+                <option value="temperature">Temperature</option>
+            </select>
+
+
+            <label for="value">
+                Enter Value
+            </label>
+
+            <input
+                type="number"
+                id="value"
+                placeholder="Example: 100"
+            >
+
+
+            <label for="fromUnit">
+                From
+            </label>
+
+            <select id="fromUnit"></select>
+
+
+            <label for="toUnit">
+                To
+            </label>
+
+            <select id="toUnit"></select>
+
+
+            <button onclick="convertUnit()">
+                Convert
+            </button>
+
+            <button class="reset-btn" onclick="resetConverter()">
+                Reset
+            </button>
+
+
+            <div id="conversion-result" class="result"></div>
+
+        </div>
+
+
+        <section class="info-section">
+
+            <h2>What is a Unit Converter?</h2>
+
+            <p>
+                A unit converter helps you convert a measurement
+                from one unit to another.
+            </p>
+
+            <h3>Examples</h3>
+
+            <p>
+                1 kilometer = 1000 meters
+            </p>
+
+            <p>
+                1 kilogram = 1000 grams
+            </p>
+
+            <p>
+                0°C = 32°F
+            </p>
+
+        </section>
+
+    </section>
+
+</main>
+
+
+<footer>
+    <div class="container">
+        <p>© 2026 Student Utility Hub. All rights reserved.</p>
+    </div>
+</footer>
+
+
+<script src="../js/script.js"></script>
+
+
+<script>
+
+const units = {
+
+    length: {
+        meter: "Meter",
+        kilometer: "Kilometer",
+        centimeter: "Centimeter",
+        millimeter: "Millimeter",
+        mile: "Mile",
+        foot: "Foot",
+        inch: "Inch"
+    },
+
+    weight: {
+        kilogram: "Kilogram",
+        gram: "Gram",
+        milligram: "Milligram",
+        pound: "Pound",
+        ounce: "Ounce"
+    },
+
+    temperature: {
+        celsius: "Celsius",
+        fahrenheit: "Fahrenheit",
+        kelvin: "Kelvin"
+    }
+
+};
+
+
+function loadUnits() {
+
+    const category =
+        document.getElementById("category").value;
+
+    const fromUnit =
+        document.getElementById("fromUnit");
+
+    const toUnit =
+        document.getElementById("toUnit");
+
+
+    fromUnit.innerHTML = "";
+
+    toUnit.innerHTML = "";
+
+
+    for (const unit in units[category]) {
+
+        const option1 =
+            document.createElement("option");
+
+        option1.value = unit;
+        option1.textContent = units[category][unit];
+
+        fromUnit.appendChild(option1);
+
+
+        const option2 =
+            document.createElement("option");
+
+        option2.value = unit;
+        option2.textContent = units[category][unit];
+
+        toUnit.appendChild(option2);
+    }
+
+
+    if (category === "length") {
+        toUnit.value = "kilometer";
+    }
+
+    if (category === "weight") {
+        toUnit.value = "gram";
+    }
+
+    if (category === "temperature") {
+        toUnit.value = "fahrenheit";
+    }
+}
+
+
+function convertUnit() {
+
+    const category =
+        document.getElementById("category").value;
+
+    const value =
+        parseFloat(document.getElementById("value").value);
+
+    const from =
+        document.getElementById("fromUnit").value;
+
+    const to =
+        document.getElementById("toUnit").value;
+
+    const resultBox =
+        document.getElementById("conversion-result");
+
+
+    if (isNaN(value)) {
+
+        resultBox.innerHTML =
+            "Please enter a value.";
+
+        return;
+    }
+
+
+    let result;
+
+
+    if (category === "length") {
+
+        result = convertLength(value, from, to);
+
+    } else if (category === "weight") {
+
+        result = convertWeight(value, from, to);
+
+    } else {
+
+        result = convertTemperature(value, from, to);
+    }
+
+
+    resultBox.innerHTML =
+        `<strong>${value} ${units[category][from]} = ${result.toFixed(4)} ${units[category][to]}</strong>`;
+}
+
+
+function convertLength(value, from, to) {
+
+    const factors = {
+
+        meter: 1,
+        kilometer: 1000,
+        centimeter: 0.01,
+        millimeter: 0.001,
+        mile: 1609.344,
+        foot: 0.3048,
+        inch: 0.0254
+
+    };
+
+
+    const meters =
+        value * factors[from];
+
+    return meters / factors[to];
+}
+
+
+function convertWeight(value, from, to) {
+
+    const factors = {
+
+        kilogram: 1,
+        gram: 0.001,
+        milligram: 0.000001,
+        pound: 0.45359237,
+        ounce: 0.028349523125
+
+    };
+
+
+    const kilograms =
+        value * factors[from];
+
+    return kilograms / factors[to];
+}
+
+
+function convertTemperature(value, from, to) {
+
+    let celsius;
+
+
+    if (from === "celsius") {
+
+        celsius = value;
+
+    } else if (from === "fahrenheit") {
+
+        celsius = (value - 32) * 5 / 9;
+
+    } else {
+
+        celsius = value - 273.15;
+    }
+
+
+    if (to === "celsius") {
+
+        return celsius;
+
+    } else if (to === "fahrenheit") {
+
+        return (celsius * 9 / 5) + 32;
+
+    } else {
+
+        return celsius + 273.15;
+    }
+}
+
+
+function resetConverter() {
+
+    document.getElementById("value").value = "";
+
+    document.getElementById("conversion-result").innerHTML = "";
+
+    document.getElementById("category").value = "length";
+
+    loadUnits();
+}
+
+
+loadUnits();
+
+</script>
+
+</body>
+</html>

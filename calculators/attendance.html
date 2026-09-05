@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Attendance Calculator - Calculate Attendance Percentage</title>
+
+    <meta name="description" content="Calculate your attendance percentage easily using this free online attendance calculator. Find out your current attendance based on attended and total classes.">
+    <meta name="robots" content="index, follow">
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+<header>
+    <div class="container navbar">
+
+        <div class="logo">Student Utility Hub</div>
+
+        <button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+        <nav id="navMenu">
+            <a href="../index.html">Home</a>
+            <a href="index.html">Calculators</a>
+            <a href="../study-tools/index.html">Study Tools</a>
+            <a href="../career-tools/index.html">Career</a>
+            <a href="../tools/index.html">Tools</a>
+        </nav>
+
+    </div>
+</header>
+
+
+<main class="container">
+
+    <section class="calculator-page">
+
+        <h1>Attendance Calculator</h1>
+
+        <p>
+            Calculate your attendance percentage easily.
+        </p>
+
+
+        <div class="calculator-box">
+
+            <label for="attended">
+                Classes Attended
+            </label>
+
+            <input
+                type="number"
+                id="attended"
+                placeholder="Example: 45"
+                min="0"
+            >
+
+
+            <label for="total">
+                Total Classes
+            </label>
+
+            <input
+                type="number"
+                id="total"
+                placeholder="Example: 60"
+                min="1"
+            >
+
+
+            <button onclick="calculateAttendance()">
+                Calculate Attendance
+            </button>
+
+            <button class="reset-btn" onclick="resetAttendance()">
+                Reset
+            </button>
+
+
+            <div id="attendance-result" class="result"></div>
+
+        </div>
+
+
+        <section class="info-section">
+
+            <h2>How to Calculate Attendance?</h2>
+
+            <p>
+                Attendance percentage is calculated using:
+            </p>
+
+            <div class="formula">
+                Attendance % = (Classes Attended ÷ Total Classes) × 100
+            </div>
+
+
+            <h3>Example</h3>
+
+            <p>
+                If you attended 45 classes out of 60:
+            </p>
+
+            <div class="formula">
+                (45 ÷ 60) × 100 = 75%
+            </div>
+
+        </section>
+
+    </section>
+
+</main>
+
+
+<footer>
+    <div class="container">
+        <p>© 2026 Student Utility Hub. All rights reserved.</p>
+    </div>
+</footer>
+
+
+<script src="../js/script.js"></script>
+
+
+<script>
+
+function calculateAttendance() {
+
+    const attended =
+        parseFloat(document.getElementById("attended").value);
+
+    const total =
+        parseFloat(document.getElementById("total").value);
+
+    const resultBox =
+        document.getElementById("attendance-result");
+
+
+    if (isNaN(attended) || isNaN(total)) {
+
+        resultBox.innerHTML =
+            "Please enter both values.";
+
+        return;
+    }
+
+
+    if (attended < 0 || total <= 0) {
+
+        resultBox.innerHTML =
+            "Please enter valid numbers.";
+
+        return;
+    }
+
+
+    if (attended > total) {
+
+        resultBox.innerHTML =
+            "Classes attended cannot be greater than total classes.";
+
+        return;
+    }
+
+
+    const attendance =
+        (attended / total) * 100;
+
+
+    resultBox.innerHTML =
+        `Your attendance is <strong>${attendance.toFixed(2)}%</strong>`;
+}
+
+
+function resetAttendance() {
+
+    document.getElementById("attended").value = "";
+
+    document.getElementById("total").value = "";
+
+    document.getElementById("attendance-result").innerHTML = "";
+}
+
+</script>
+
+</body>
+</html>

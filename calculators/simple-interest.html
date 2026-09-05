@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Simple Interest Calculator - Free Online Calculator</title>
+
+    <meta name="description" content="Calculate simple interest and total amount easily with this free online simple interest calculator.">
+    <meta name="robots" content="index, follow">
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+<header>
+    <div class="container navbar">
+
+        <div class="logo">Student Utility Hub</div>
+
+        <button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+        <nav id="navMenu">
+            <a href="../index.html">Home</a>
+            <a href="index.html">Calculators</a>
+            <a href="../study-tools/index.html">Study Tools</a>
+            <a href="../career-tools/index.html">Career</a>
+            <a href="../tools/index.html">Tools</a>
+        </nav>
+
+    </div>
+</header>
+
+
+<main class="container">
+
+    <section class="calculator-page">
+
+        <h1>Simple Interest Calculator</h1>
+
+        <p>
+            Calculate simple interest and total amount quickly and easily.
+        </p>
+
+
+        <div class="calculator-box">
+
+            <label for="principal">
+                Principal Amount (₹)
+            </label>
+
+            <input
+                type="number"
+                id="principal"
+                placeholder="Example: 10000"
+                min="0"
+            >
+
+
+            <label for="rate">
+                Annual Interest Rate (%)
+            </label>
+
+            <input
+                type="number"
+                id="rate"
+                placeholder="Example: 5"
+                min="0"
+                step="0.01"
+            >
+
+
+            <label for="time">
+                Time (Years)
+            </label>
+
+            <input
+                type="number"
+                id="time"
+                placeholder="Example: 3"
+                min="0"
+                step="0.1"
+            >
+
+
+            <button onclick="calculateSI()">
+                Calculate
+            </button>
+
+            <button class="reset-btn" onclick="resetSI()">
+                Reset
+            </button>
+
+
+            <div id="si-result" class="result"></div>
+
+        </div>
+
+
+        <section class="info-section">
+
+            <h2>How is Simple Interest calculated?</h2>
+
+            <p>
+                Simple Interest is calculated using the following formula:
+            </p>
+
+            <div class="formula">
+                SI = (P × R × T) ÷ 100
+            </div>
+
+            <p>
+                Where:
+            </p>
+
+            <p>
+                P = Principal Amount
+            </p>
+
+            <p>
+                R = Annual Interest Rate
+            </p>
+
+            <p>
+                T = Time in Years
+            </p>
+
+
+            <h3>Example</h3>
+
+            <p>
+                If the principal is ₹10,000, interest rate is 5%,
+                and time is 3 years:
+            </p>
+
+            <div class="formula">
+                SI = (10000 × 5 × 3) ÷ 100 = ₹1,500
+            </div>
+
+            <div class="formula">
+                Total Amount = ₹10,000 + ₹1,500 = ₹11,500
+            </div>
+
+        </section>
+
+    </section>
+
+</main>
+
+
+<footer>
+    <div class="container">
+        <p>© 2026 Student Utility Hub. All rights reserved.</p>
+    </div>
+</footer>
+
+
+<script src="../js/script.js"></script>
+
+
+<script>
+
+function calculateSI() {
+
+    const principal =
+        parseFloat(document.getElementById("principal").value);
+
+    const rate =
+        parseFloat(document.getElementById("rate").value);
+
+    const time =
+        parseFloat(document.getElementById("time").value);
+
+    const resultBox =
+        document.getElementById("si-result");
+
+
+    if (
+        isNaN(principal) ||
+        isNaN(rate) ||
+        isNaN(time)
+    ) {
+
+        resultBox.innerHTML =
+            "Please enter all values.";
+
+        return;
+    }
+
+
+    if (
+        principal < 0 ||
+        rate < 0 ||
+        time < 0
+    ) {
+
+        resultBox.innerHTML =
+            "Please enter valid values.";
+
+        return;
+    }
+
+
+    const simpleInterest =
+        (principal * rate * time) / 100;
+
+
+    const totalAmount =
+        principal + simpleInterest;
+
+
+    resultBox.innerHTML = `
+        <p>Simple Interest:
+        <strong>₹${simpleInterest.toFixed(2)}</strong></p>
+
+        <p>Total Amount:
+        <strong>₹${totalAmount.toFixed(2)}</strong></p>
+    `;
+}
+
+
+function resetSI() {
+
+    document.getElementById("principal").value = "";
+
+    document.getElementById("rate").value = "";
+
+    document.getElementById("time").value = "";
+
+    document.getElementById("si-result").innerHTML = "";
+}
+
+</script>
+
+</body>
+</html>

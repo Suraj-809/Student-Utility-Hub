@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>QR Code Generator - Free Online QR Code Generator</title>
+    <meta name="description" content="Generate QR codes easily from text or URLs with this free online QR code generator.">
+    <meta name="robots" content="index, follow">
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container nav-container">
+
+            <a href="../index.html" class="logo">
+                Student Utility Hub
+            </a>
+
+            <button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+            <nav id="navMenu">
+                <a href="../index.html">Home</a>
+                <a href="../index.html#tools">Tools</a>
+                <a href="../index.html#about">About</a>
+            </nav>
+
+        </div>
+    </header>
+
+
+    <!-- Main -->
+    <main class="container">
+
+        <div class="calculator-page">
+
+            <h1>QR Code Generator</h1>
+
+            <p class="tool-intro">
+                Create a QR code for a website, text, message or any
+                other short information.
+            </p>
+
+
+            <!-- QR Generator -->
+            <div class="calculator-box">
+
+                <h2>Enter Your Content</h2>
+
+                <textarea
+                    id="qrText"
+                    rows="5"
+                    placeholder="Enter text or paste a website URL..."
+                ></textarea>
+
+
+                <button
+                    onclick="generateQR()"
+                    class="calculate-btn"
+                >
+                    Generate QR Code
+                </button>
+
+                <button
+                    onclick="clearQR()"
+                    class="reset-btn"
+                >
+                    Clear
+                </button>
+
+
+                <!-- QR Code -->
+                <div id="qrResult" class="qr-result">
+
+                    <p>
+                        Your QR code will appear here.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- Explanation -->
+            <section class="explanation">
+
+                <h2>How to Use the QR Code Generator</h2>
+
+                <ol>
+                    <li>Enter text or a website URL.</li>
+                    <li>Click "Generate QR Code".</li>
+                    <li>Scan the generated QR code using a phone.</li>
+                </ol>
+
+                <h3>What can you use it for?</h3>
+
+                <p>
+                    You can create QR codes for websites, notes, study
+                    resources, contact information, event details and
+                    other short text.
+                </p>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+
+        <div class="container">
+
+            <p>
+                © 2026 Student Utility Hub. All rights reserved.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <script src="../js/script.js"></script>
+
+    <!-- QR Code Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+
+    <script>
+
+        function generateQR() {
+
+            const text =
+                document.getElementById("qrText").value.trim();
+
+            const result =
+                document.getElementById("qrResult");
+
+
+            if (!text) {
+
+                alert("Please enter some text or a URL.");
+
+                return;
+            }
+
+
+            // Remove previous QR code
+            result.innerHTML = "";
+
+
+            // Create QR code
+            new QRCode(result, {
+                text: text,
+                width: 220,
+                height: 220,
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        }
+
+
+        function clearQR() {
+
+            document.getElementById("qrText").value = "";
+
+            document.getElementById("qrResult").innerHTML = `
+                <p>
+                    Your QR code will appear here.
+                </p>
+            `;
+        }
+
+    </script>
+
+</body>
+</html>
